@@ -1,0 +1,1400 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This document is aimed at providing a detailed view of the Sky Q Cloud PVR API operations, their parameters, responses, and errors.\nThe purpose of the API is to provide a complete set of resources for the successful implementation of a Cloud PVR API client.\n\nThis is a mirror of the documentation for the AWS-hosted SkyQ Cloud PVR at http://35.176.20.130. All **'Try it out!'** requests will be forwarded to this IP. No modification to documentation, except this message and an extra `script` tag, have been made.",
+    "version": "1.0.0-SNAPSHOT",
+    "title": "SkyQ Cloud PVR",
+    "contact": {},
+    "license": {}
+  },
+  "host": "cors-anywhere.davwheat.dev/?https://sky-q-aws.borisbingo.com",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "pin-controller",
+      "description": "Pin Controller"
+    },
+    {
+      "name": "pvr-controller",
+      "description": "Pvr Controller"
+    },
+    {
+      "name": "schedule-controller",
+      "description": "Schedule Controller"
+    },
+    {
+      "name": "services-controller",
+      "description": "Services Controller"
+    },
+    {
+      "name": "system-controller",
+      "description": "System Controller"
+    }
+  ],
+  "paths": {
+    "/as/pin": {
+      "get": {
+        "tags": [
+          "PIN Resources"
+        ],
+        "summary": "Returns the status of the PIN subsystem, not the PIN itself",
+        "operationId": "getUsingGET",
+        "produces": [
+          "application/json;charset=UTF-8"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/as/pin/action/submit": {
+      "post": {
+        "tags": [
+          "PIN Resources"
+        ],
+        "summary": "Submits a PIN for verification",
+        "operationId": "verifyUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json;charset=UTF-8"
+        ],
+        "parameters": [
+          {
+            "name": "pin",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/as/pvr": {
+      "get": {
+        "tags": [
+          "PVR Resources"
+        ],
+        "summary": "Returns the items within the pvr",
+        "operationId": "getPvrItemsUsingGET",
+        "produces": [
+          "application/json;charset=UTF-8"
+        ],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": true,
+            "type": "ref"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": true,
+            "type": "ref"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PvrItemsResource"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      },
+      "delete": {
+        "tags": [
+          "PVR Resources"
+        ],
+        "summary": "Deletes all items within the pvr",
+        "operationId": "removeAllPvrItemsUsingDELETE",
+        "produces": [
+          "application/json;charset=UTF-8"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/as/pvr/action/bookppvrecording": {
+      "post": {
+        "tags": [
+          "PVR Resources"
+        ],
+        "summary": "Books a PPV recording",
+        "operationId": "bookPPVRecordingUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json;charset=UTF-8"
+        ],
+        "parameters": [
+          {
+            "name": "eid",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "offerref",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "pin",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/as/pvr/action/bookrecording": {
+      "post": {
+        "tags": [
+          "PVR Resources"
+        ],
+        "summary": "Books a recording, without any series link",
+        "operationId": "bookRecordingUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json;charset=UTF-8"
+        ],
+        "parameters": [
+          {
+            "name": "eid",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "parentsid",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/as/pvr/action/bookseriesrecording": {
+      "post": {
+        "tags": [
+          "PVR Resources"
+        ],
+        "summary": "Books a recording, with series link",
+        "operationId": "bookSeriesRecordingUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json;charset=UTF-8"
+        ],
+        "parameters": [
+          {
+            "name": "eid",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "parentsid",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/as/pvr/action/cancelrecording": {
+      "post": {
+        "tags": [
+          "PVR Resources"
+        ],
+        "summary": "Cancels a recording that is in progress, leaving the recorded part intact",
+        "operationId": "cancelRecordingUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json;charset=UTF-8"
+        ],
+        "parameters": [
+          {
+            "name": "pvrid",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/as/pvr/action/delete": {
+      "post": {
+        "tags": [
+          "PVR Resources"
+        ],
+        "summary": "Deletes the pvr item, moving it to trash where possible",
+        "operationId": "deleteUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json;charset=UTF-8"
+        ],
+        "parameters": [
+          {
+            "name": "pvrid",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/as/pvr/action/erase": {
+      "post": {
+        "tags": [
+          "PVR Resources"
+        ],
+        "summary": "Erases a recording permanently",
+        "operationId": "eraseUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json;charset=UTF-8"
+        ],
+        "parameters": [
+          {
+            "name": "pvrid",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/as/pvr/action/keep": {
+      "post": {
+        "tags": [
+          "PVR Resources"
+        ],
+        "summary": "Keeps a recording",
+        "operationId": "keepUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json;charset=UTF-8"
+        ],
+        "parameters": [
+          {
+            "name": "pvrid",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/as/pvr/action/lock": {
+      "post": {
+        "tags": [
+          "PVR Resources"
+        ],
+        "summary": "Locks a recording",
+        "operationId": "lockUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json;charset=UTF-8"
+        ],
+        "parameters": [
+          {
+            "name": "pvrid",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/as/pvr/action/serieslink": {
+      "post": {
+        "tags": [
+          "PVR Resources"
+        ],
+        "summary": "Applies a series link to an existing scheduled recording",
+        "operationId": "addSeriesLinkUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json;charset=UTF-8"
+        ],
+        "parameters": [
+          {
+            "name": "pvrid",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/as/pvr/action/seriesunlink": {
+      "post": {
+        "tags": [
+          "PVR Resources"
+        ],
+        "summary": "Removes any series link from an existing scheduled recording",
+        "operationId": "removeSeriesLinkUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json;charset=UTF-8"
+        ],
+        "parameters": [
+          {
+            "name": "pvrid",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/as/pvr/action/undelete": {
+      "post": {
+        "tags": [
+          "PVR Resources"
+        ],
+        "summary": "Undeletes a pvr item",
+        "operationId": "undeleteUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json;charset=UTF-8"
+        ],
+        "parameters": [
+          {
+            "name": "pvrid",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/as/pvr/action/unkeep": {
+      "post": {
+        "tags": [
+          "PVR Resources"
+        ],
+        "summary": "Keeps a recording",
+        "operationId": "unkeepUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json;charset=UTF-8"
+        ],
+        "parameters": [
+          {
+            "name": "pvrid",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/as/pvr/action/unlock": {
+      "post": {
+        "tags": [
+          "PVR Resources"
+        ],
+        "summary": "Locks a recording",
+        "operationId": "unlockUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json;charset=UTF-8"
+        ],
+        "parameters": [
+          {
+            "name": "pvrid",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/as/pvr/changes/{documentId}/{version}": {
+      "get": {
+        "tags": [
+          "PVR Resources"
+        ],
+        "summary": "Returns the items within the pvr",
+        "operationId": "getPvrChangesUsingGET",
+        "produces": [
+          "application/json;charset=UTF-8"
+        ],
+        "parameters": [
+          {
+            "name": "documentId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "type": "ref"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PvrItemsResource"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/as/pvr/details/{pvrId}": {
+      "get": {
+        "tags": [
+          "PVR Resources"
+        ],
+        "summary": "Returns a single pvr item",
+        "operationId": "getPvrItemUsingGET",
+        "produces": [
+          "application/json;charset=UTF-8"
+        ],
+        "parameters": [
+          {
+            "name": "pvrId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PvrItemDetailsResource"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      },
+      "put": {
+        "tags": [
+          "PVR Resources"
+        ],
+        "summary": "Updates a given PVR item",
+        "operationId": "updatePvrItemUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json;charset=UTF-8"
+        ],
+        "parameters": [
+          {
+            "name": "pvrId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "pvrItemResource",
+            "description": "pvrItemResource",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PvrItemResource"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/as/pvr/setlastplayedposition": {
+      "post": {
+        "tags": [
+          "PVR Resources"
+        ],
+        "summary": "Set the last played position of a pvr entry",
+        "operationId": "lastplayedUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json;charset=UTF-8"
+        ],
+        "parameters": [
+          {
+            "name": "pos",
+            "in": "query",
+            "required": true,
+            "type": "ref"
+          },
+          {
+            "name": "pvrid",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/as/pvr/storage": {
+      "get": {
+        "tags": [
+          "PVR Resources"
+        ],
+        "summary": "Returns details of the pvr storage (whether local or remote)",
+        "operationId": "storageUsingGET",
+        "produces": [
+          "application/json;charset=UTF-8"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PvrStorageResource"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/as/schedule/event/{eid}": {
+      "get": {
+        "tags": [
+          "Schedule Resources"
+        ],
+        "summary": "Returns the events on the date and service ID",
+        "operationId": "getEventUsingGET",
+        "produces": [
+          "application/json;charset=UTF-8"
+        ],
+        "parameters": [
+          {
+            "name": "eid",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/as/schedule/{date}/{sid}": {
+      "get": {
+        "tags": [
+          "Schedule Resources"
+        ],
+        "summary": "Returns the events on the date and service ID",
+        "operationId": "getScheduleUsingGET",
+        "produces": [
+          "application/json;charset=UTF-8"
+        ],
+        "parameters": [
+          {
+            "name": "date",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "sid",
+            "in": "path",
+            "required": true,
+            "type": "ref"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/LinearSchedules"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/as/services/{bouquet}/{subbouquet}": {
+      "get": {
+        "tags": [
+          "Service Resources"
+        ],
+        "summary": "Returns a list of services",
+        "operationId": "getServicesUsingGET",
+        "produces": [
+          "application/json;charset=UTF-8"
+        ],
+        "parameters": [
+          {
+            "name": "bouquet",
+            "in": "path",
+            "required": true,
+            "type": "ref"
+          },
+          {
+            "name": "subbouquet",
+            "in": "path",
+            "required": true,
+            "type": "ref"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/AwkChannelResource"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/as/system/action/ping": {
+      "post": {
+        "tags": [
+          "System Resources"
+        ],
+        "summary": "Used by the caller to determine if a service is \"alive\"",
+        "operationId": "pingUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json;charset=UTF-8"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/as/system/deviceinformation": {
+      "get": {
+        "tags": [
+          "System Resources"
+        ],
+        "summary": "Returns a restricted list of system details",
+        "operationId": "deviceInformationUsingGET",
+        "produces": [
+          "application/json;charset=UTF-8"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DeviceInformation"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    }
+  },
+  "definitions": {
+    "AwkChannelResource": {
+      "type": "object",
+      "properties": {
+        "adult": {
+          "type": "string"
+        },
+        "avail": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "c": {
+          "type": "string"
+        },
+        "local": {
+          "type": "string"
+        },
+        "sf": {
+          "type": "string"
+        },
+        "sg": {
+          "type": "string"
+        },
+        "sid": {
+          "type": "string"
+        },
+        "t": {
+          "type": "string"
+        },
+        "xsg": {
+          "type": "string"
+        }
+      },
+      "title": "AwkChannelResource"
+    },
+    "DeviceInformation": {
+      "type": "object",
+      "properties": {
+        "ASVersion": {
+          "type": "string"
+        },
+        "IPAddress": {
+          "type": "string"
+        },
+        "bouquet": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "countryCode": {
+          "type": "string"
+        },
+        "gateway": {
+          "type": "boolean"
+        },
+        "hardwareName": {
+          "type": "string"
+        },
+        "householdToken": {
+          "type": "string"
+        },
+        "modelNumber": {
+          "type": "string"
+        },
+        "pipCapable": {
+          "type": "boolean"
+        },
+        "serialNumber": {
+          "type": "string"
+        },
+        "streamingCapable": {
+          "type": "boolean"
+        },
+        "subbouquet": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "versionNumber": {
+          "type": "string"
+        }
+      },
+      "title": "DeviceInformation"
+    },
+    "LinearEvent": {
+      "type": "object",
+      "properties": {
+        "ad": {
+          "type": "boolean"
+        },
+        "at": {
+          "type": "string"
+        },
+        "canb": {
+          "type": "boolean"
+        },
+        "canl": {
+          "type": "boolean"
+        },
+        "cgid": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "d": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "eg": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "eid": {
+          "type": "string"
+        },
+        "episodenumber": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "esg": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "hasAlternativeAudio": {
+          "type": "boolean"
+        },
+        "haschildren": {
+          "type": "boolean"
+        },
+        "hd": {
+          "type": "boolean"
+        },
+        "ippv": {
+          "type": "boolean"
+        },
+        "new": {
+          "type": "boolean"
+        },
+        "oppv": {
+          "type": "boolean"
+        },
+        "programmeuuid": {
+          "type": "string"
+        },
+        "r": {
+          "type": "string"
+        },
+        "restartable": {
+          "type": "boolean"
+        },
+        "s": {
+          "type": "boolean"
+        },
+        "seasonnumber": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "seasonuuid": {
+          "type": "string"
+        },
+        "seriesuuid": {
+          "type": "string"
+        },
+        "slo": {
+          "type": "boolean"
+        },
+        "st": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "sy": {
+          "type": "string"
+        },
+        "t": {
+          "type": "string"
+        },
+        "tso": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "w": {
+          "type": "boolean"
+        }
+      },
+      "title": "LinearEvent"
+    },
+    "LinearSchedule": {
+      "type": "object",
+      "properties": {
+        "events": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/LinearEvent"
+          }
+        },
+        "sid": {
+          "type": "string"
+        }
+      },
+      "title": "LinearSchedule"
+    },
+    "LinearSchedules": {
+      "type": "object",
+      "properties": {
+        "date": {
+          "type": "string"
+        },
+        "schedule": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/LinearSchedule"
+          }
+        }
+      },
+      "title": "LinearSchedules"
+    },
+    "PvrItemDetailsResource": {
+      "type": "object",
+      "properties": {
+        "details": {
+          "$ref": "#/definitions/PvrItemResource"
+        },
+        "pvrid": {
+          "type": "string"
+        }
+      },
+      "title": "PvrItemDetailsResource"
+    },
+    "PvrItemResource": {
+      "type": "object",
+      "properties": {
+        "at": {
+          "type": "string"
+        },
+        "c": {
+          "type": "string"
+        },
+        "canl": {
+          "type": "boolean"
+        },
+        "cn": {
+          "type": "string"
+        },
+        "del": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "eg": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "episodenumber": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "esg": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "et": {
+          "type": "string"
+        },
+        "hd": {
+          "type": "boolean"
+        },
+        "keep": {
+          "type": "boolean"
+        },
+        "link": {
+          "type": "boolean"
+        },
+        "lock": {
+          "type": "boolean"
+        },
+        "lp": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "lpt": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "lto": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "oeid": {
+          "type": "string"
+        },
+        "osid": {
+          "type": "string"
+        },
+        "osk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "predictedsz": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "programmeuuid": {
+          "type": "string"
+        },
+        "pvrid": {
+          "type": "string"
+        },
+        "s": {
+          "type": "boolean"
+        },
+        "schd": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "seasonnumber": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "seasonuuid": {
+          "type": "string"
+        },
+        "seriesuuid": {
+          "type": "string"
+        },
+        "slo": {
+          "type": "boolean"
+        },
+        "src": {
+          "type": "string"
+        },
+        "st": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "status": {
+          "type": "string"
+        },
+        "streamuri": {
+          "type": "string"
+        },
+        "sy": {
+          "type": "string"
+        },
+        "t": {
+          "type": "string"
+        },
+        "tso": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "type": {
+          "type": "string"
+        },
+        "w": {
+          "type": "boolean"
+        }
+      },
+      "title": "PvrItemResource"
+    },
+    "PvrItemsResource": {
+      "type": "object",
+      "properties": {
+        "documentId": {
+          "type": "string"
+        },
+        "offset": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "pvrItems": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PvrItemResource"
+          }
+        },
+        "totalPvrItems": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "version": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "PvrItemsResource"
+    },
+    "PvrStorageResource": {
+      "type": "object",
+      "properties": {
+        "userQuotaMax": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "userQuotaUsed": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "PvrStorageResource"
+    }
+  }
+}
